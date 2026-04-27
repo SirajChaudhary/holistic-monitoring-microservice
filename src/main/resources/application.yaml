@@ -1,0 +1,77 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: holistic-monitoring-microservice
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monitoring_db
+    username: postgres
+    password: siraj123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # For demo; use validate in production
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+# =========================
+# ACTUATOR CONFIG
+# =========================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,loggers
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# =========================
+# ACTUATOR (/info)
+# =========================
+info:
+  app:
+    name: ${spring.application.name}
+    description: It is an observability microservice
+    version: 1.0.0
+  build:
+    java: 21
+    spring-boot: 3.5.x
+
+# =========================
+# PROMETHEUS CONFIG
+# =========================
+management.metrics.export.prometheus:
+  enabled: true
+
+# =========================
+# TRACING CONFIG (Micrometer)
+# =========================
+management.tracing:
+  sampling:
+    probability: 1.0   # capture all traces
+
+# =========================
+# ZIPKIN CONFIG
+# =========================
+management.zipkin.tracing:
+  endpoint: http://localhost:9411/api/v2/spans
+
+# =========================
+# LOGGING LEVELS
+# =========================
+logging:
+  level:
+    root: INFO
+    com.example.monitoring: DEBUG

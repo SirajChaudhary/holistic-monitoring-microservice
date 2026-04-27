@@ -1,0 +1,157 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example.monitoring</groupId>
+    <artifactId>holistic-monitoring-microservice</artifactId>
+    <version>1.0.0</version>
+    <name>holistic-monitoring-microservice</name>
+    <description>Comprehensive Logging, Tracing and Monitoring Microservice</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <spring.boot.version>3.5.13</spring.boot.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- OpenTelemetry Instrumentation BOM -->
+            <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId>opentelemetry-instrumentation-bom</artifactId>
+                <version>2.26.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <!-- =========================
+             SPRING BOOT CORE
+        ========================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- =========================
+             DATABASE (POSTGRES)
+        ========================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- =========================
+             LOGGING
+        ========================== -->
+        <!-- Default SLF4J + Logback comes with Spring Boot -->
+
+        <!-- JSON Logging for ELK -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>7.4</version>
+        </dependency>
+
+        <!-- =========================
+             MONITORING & METRICS
+        ========================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- =========================
+             METRICS (PROMETHEUS)
+        ========================= -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <!-- =========================
+             TRACING (Micrometer + OpenTelemetry)
+        ========================= -->
+
+        <!-- Enables distributed tracing using Micrometer -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+
+        <!-- Exports traces to Zipkin for visualization -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-zipkin</artifactId>
+        </dependency>
+
+        <!-- =========================
+             VALIDATION
+        ========================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- =========================
+             LOMBOK
+        ========================== -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- =========================
+             TESTING
+        ========================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Spring Boot Plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Compiler Plugin for Java 21 -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

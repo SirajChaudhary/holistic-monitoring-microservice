@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "0be6e490-fae6-4195-a11e-409daf17bf49",
+		"name": "Holistic Monitoring Microservice APIs",
+		"description": "Collection to test Payment APIs with observability (logging, tracing, metrics).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27668494"
+	},
+	"item": [
+		{
+			"name": "Create Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Correlation-Id",
+						"value": "manual-test-123"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": 1200,\n  \"currency\": \"INR\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/payments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"payments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulate Error",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/payments/simulate-error",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"payments",
+						"simulate-error"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "External Call Simulation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/payments/external-call",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"payments",
+						"external-call"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

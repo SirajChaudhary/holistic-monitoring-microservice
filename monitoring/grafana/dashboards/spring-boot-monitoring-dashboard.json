@@ -1,0 +1,162 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Requests Per Second",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(http_server_requests_seconds_count[1m])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Error Rate (5xx)",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(http_server_requests_seconds_count{status=\"500\"}[1m])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Average API Latency",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(http_server_requests_seconds_sum[1m]) / rate(http_server_requests_seconds_count[1m])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Max API Latency",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "http_server_requests_seconds_max",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Requests by Endpoint",
+      "gridPos": { "x": 0, "y": 6, "w": 12, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum by (uri) (rate(http_server_requests_seconds_count[1m]))",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency by Endpoint",
+      "gridPos": { "x": 12, "y": 6, "w": 12, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum by (uri) (rate(http_server_requests_seconds_sum[1m])) / sum by (uri) (rate(http_server_requests_seconds_count[1m]))",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "DB Call Rate",
+      "gridPos": { "x": 0, "y": 12, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(db_operation_time_seconds_count[1m])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Average DB Latency",
+      "gridPos": { "x": 6, "y": 12, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(db_operation_time_seconds_sum[1m]) / rate(db_operation_time_seconds_count[1m])",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Max DB Latency",
+      "gridPos": { "x": 12, "y": 12, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "db_operation_time_seconds_max",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "DB Calls by Operation",
+      "gridPos": { "x": 18, "y": 12, "w": 6, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum by (operation) (rate(db_operation_time_seconds_count[1m]))",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "API vs DB Latency",
+      "gridPos": { "x": 0, "y": 18, "w": 24, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(http_server_requests_seconds_sum[1m]) / rate(http_server_requests_seconds_count[1m])",
+          "refId": "A",
+          "legendFormat": "API Latency"
+        },
+        {
+          "expr": "rate(db_operation_time_seconds_sum[1m]) / rate(db_operation_time_seconds_count[1m])",
+          "refId": "B",
+          "legendFormat": "DB Latency"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Errors by Endpoint",
+      "gridPos": { "x": 0, "y": 24, "w": 24, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum by (uri) (rate(http_server_requests_seconds_count{status=\"500\"}[1m]))",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["monitoring", "micrometer"],
+  "templating": { "list": [] },
+  "time": { "from": "now-15m", "to": "now" },
+  "timezone": "",
+  "title": "Spring Boot Monitoring Dashboard",
+  "version": 1
+}
